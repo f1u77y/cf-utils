@@ -1,0 +1,47 @@
+#! /usr/bin/env python3
+
+import sys
+import os
+import os.path
+import requests
+import lxml.html
+
+def get_round():
+    d = os.path.basename(os.getcwd())
+    try:
+        int(d)
+    except:
+        raise ValueError('{}: not a CodeForces round directory'.format(d))
+    return d
+
+def get_tests(rnum):
+    base_url = 'http://codeforces.com/contest/{rnum}/problem/{task}'
+    for task in 'ABCDEF':
+        print('Task {task}'.format(**locals()))
+        url = base_url.format(**locals())
+        r = requests.get(url)
+        doc = lxml.html.document_fromstring(r.text)
+        test_path = "//div[@class='sample-tests']/div[@class='sample-test']"
+        input_elems = doc.xpath(test_path + "/div[@class='input']/pre")
+        output_elems = doc.xpath(test_path + "/div[@class='output']/pre")
+
+        nt = len(input_elems)
+
+        input_text = []
+        output_text = []
+        for i in range(nt):
+            input_text.append('\n'.join(input_elems[i].itertext()))
+            output_text.append('\n'.join(output_elems[i].itertext()))
+
+        for i in range(nt):
+            with open('tests/{task}.{i}.in'.format(**locals()), 'w') as input_file:
+                print(input_text[i], file=input_file)
+            with open('tests/{task}.{i}.out'.format(**locals()), 'w') as output_file:
+                print(output_text[i], file=output_file)
+
+if sys.argv[1] == 'get-tests':
+    get_tests(get_round())
+elif sys.argv[1] == 'get-round':
+    print('Round #{}'.format(get_round()))
+else:
+    print('cf-test [get-tests|get-round]')
