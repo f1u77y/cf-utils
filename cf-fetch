@@ -58,4 +58,4 @@ elif sys.argv[1] == 'problems-count':
 elif sys.argv[1] == 'problems':
     get_problems(get_round())
 else:
-    print('cf-test [get-tests|get-round]')
+    print('cf-test [tests|round|problems-count|problems]')
