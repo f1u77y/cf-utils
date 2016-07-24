@@ -9,9 +9,18 @@ import lxml.html
 def get_round():
     return os.path.basename(os.getcwd())
 
+def get_problems_count(rnum):
+    base_url = 'http://codeforces.com/contest/{rnum}/problems'
+    url = base_url.format(**locals())
+    r = requests.get(url).text
+    doc = lxml.html.document_fromstring(r)
+    return len(doc.xpath("//div[@class='problem-statement']"))
+
+
 def get_tests(rnum):
     base_url = 'http://codeforces.com/contest/{rnum}/problem/{task}'
-    for task in 'ABCDEF':
+    problems_count = get_problems_count(rnum)
+    for task in (chr(i) for i in range(ord('A'), ord('A') + problems_count)):
         print('Task {task}'.format(**locals()))
         url = base_url.format(**locals())
         doc = lxml.html.document_fromstring(requests.get(url).text)
@@ -37,5 +46,7 @@ if sys.argv[1] == 'get-tests':
     get_tests(get_round())
 elif sys.argv[1] == 'get-round':
     print('Round #{}'.format(get_round()))
+elif sys.argv[1] == 'get-problems-count':
+    print('Problems count: {}'.format(get_problems_count(get_round())))
 else:
     print('cf-test [get-tests|get-round]')
