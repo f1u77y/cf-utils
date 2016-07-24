@@ -43,10 +43,19 @@ def get_tests(rnum):
                 print(output_text[i], file=output_file)
 
 if sys.argv[1] == 'get-tests':
+def get_problems(rnum):
+    base_url = 'http://codeforces.com/contest/{rnum}/problems'
+    url = base_url.format(**locals())
+    r = requests.get(url).text
+    with open('problems.html', 'w') as problems_file:
+        print(r, file=problems_file)
+
     get_tests(get_round())
 elif sys.argv[1] == 'get-round':
     print('Round #{}'.format(get_round()))
 elif sys.argv[1] == 'get-problems-count':
     print('Problems count: {}'.format(get_problems_count(get_round())))
+elif sys.argv[1] == 'problems':
+    get_problems(get_round())
 else:
     print('cf-test [get-tests|get-round]')
