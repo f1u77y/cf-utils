@@ -7,12 +7,7 @@ import requests
 import lxml.html
 
 def get_round():
-    d = os.path.basename(os.getcwd())
-    try:
-        int(d)
-    except:
-        raise ValueError('{}: not a CodeForces round directory'.format(d))
-    return d
+    return os.path.basename(os.getcwd())
 
 def get_tests(rnum):
     base_url = 'http://codeforces.com/contest/{rnum}/problem/{task}'
