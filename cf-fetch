@@ -14,8 +14,7 @@ def get_tests(rnum):
     for task in 'ABCDEF':
         print('Task {task}'.format(**locals()))
         url = base_url.format(**locals())
-        r = requests.get(url)
-        doc = lxml.html.document_fromstring(r.text)
+        doc = lxml.html.document_fromstring(requests.get(url).text)
         test_path = "//div[@class='sample-tests']/div[@class='sample-test']"
         input_elems = doc.xpath(test_path + "/div[@class='input']/pre")
         output_elems = doc.xpath(test_path + "/div[@class='output']/pre")
