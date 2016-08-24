@@ -49,7 +49,9 @@ def get_problems(rnum):
     with open('problems.html', 'w') as problems_file:
         print(r, file=problems_file)
 
-if sys.argv[1] == 'tests':
+if len(sys.argv) < 2:
+    print('cf-fetch [tests|round|problems-count|problems]')
+elif sys.argv[1] == 'tests':
     get_tests(get_round())
 elif sys.argv[1] == 'round':
     print('Round #{}'.format(get_round()))
@@ -58,4 +60,4 @@ elif sys.argv[1] == 'problems-count':
 elif sys.argv[1] == 'problems':
     get_problems(get_round())
 else:
-    print('cf-test [tests|round|problems-count|problems]')
+    print('cf-fetch [tests|round|problems-count|problems]')
