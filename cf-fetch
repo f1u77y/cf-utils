@@ -20,7 +20,7 @@ def get_problems_count(rnum):
 def get_tests(rnum):
     base_url = 'http://codeforces.com/contest/{rnum}/problem/{task}'
     problems_count = get_problems_count(rnum)
-    for task in (chr(i) for i in range(ord('A'), ord('A') + problems_count)):
+    for task in (chr(i + ord('A')) for i in range(problems_count)):
         print('Task {task}'.format(**locals()))
         url = base_url.format(**locals())
         doc = lxml.html.document_fromstring(requests.get(url).text)
