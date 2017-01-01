@@ -5,6 +5,7 @@ import os
 import os.path
 import requests
 import lxml.html
+import argparse
 
 def get_round():
     return os.path.basename(os.getcwd())
@@ -18,6 +19,7 @@ def get_problems_count(rnum):
 
 
 def get_tests(rnum):
+    os.makedirs('tests')
     base_url = 'http://codeforces.com/contest/{rnum}/problem/{task}'
     problems_count = get_problems_count(rnum)
     for task in (chr(i + ord('A')) for i in range(problems_count)):
@@ -49,15 +51,23 @@ def get_problems(rnum):
     with open('problems.html', 'w') as problems_file:
         print(r, file=problems_file)
 
-if len(sys.argv) < 2:
-    print('cf-fetch [tests|round|problems-count|problems]')
-elif sys.argv[1] == 'tests':
-    get_tests(get_round())
-elif sys.argv[1] == 'round':
-    print('Round #{}'.format(get_round()))
-elif sys.argv[1] == 'problems-count':
-    print('Problems count: {}'.format(get_problems_count(get_round())))
-elif sys.argv[1] == 'problems':
-    get_problems(get_round())
-else:
-    print('cf-fetch [tests|round|problems-count|problems]')
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(
+        prog='cf',
+        )
+    subparsers = parser.add_subparsers(help='sub-command help')
+
+    parser_fetch = subparsers.add_parser('fetch')
+    subparsers_fetch = parser_fetch.add_subparsers()
+
+    parser_fetch_tests = subparsers_fetch.add_parser('tests')
+    parser_fetch_tests.set_defaults(func=lambda args: get_tests(get_round()))
+
+    parser_fetch_problems = subparsers_fetch.add_parser('problems')
+    parser_fetch_problems.set_defaults(func=lambda args: get_problems(get_round()))
+
+    args = parser.parse_args()
+    if not hasattr(args, 'func'):
+        print()
+        sys.exit(1)
+    args.func(args)
