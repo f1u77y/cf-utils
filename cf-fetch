@@ -37,9 +37,9 @@ def get_tests(rnum):
             output_text.append('\n'.join(output_elems[i].itertext()))
 
         for i in range(nt):
-            with open('tests/{task}.{i}.in'.format(**locals()), 'w') as input_file:
+            with open('tests/{task}.in.{i}'.format(**locals()), 'w') as input_file:
                 print(input_text[i], file=input_file)
-            with open('tests/{task}.{i}.out'.format(**locals()), 'w') as output_file:
+            with open('tests/{task}.out.{i}'.format(**locals()), 'w') as output_file:
                 print(output_text[i], file=output_file)
 
 def get_problems(rnum):
