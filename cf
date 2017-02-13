@@ -19,7 +19,9 @@ def get_problems_count(rnum):
 
 
 def get_tests(rnum):
-    os.makedirs('tests')
+    import os.path
+    if not os.path.exists('tests'):
+        os.mkdir('tests')
     base_url = 'http://codeforces.com/contest/{rnum}/problem/{task}'
     problems_count = get_problems_count(rnum)
     for task in (chr(i + ord('A')) for i in range(problems_count)):
