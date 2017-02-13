@@ -55,16 +55,13 @@ if __name__ == "__main__":
     subparsers = parser.add_subparsers(help='sub-command help')
 
     parser_fetch = subparsers.add_parser('fetch')
-    subparsers_fetch = parser_fetch.add_subparsers()
-
-    parser_fetch_tests = subparsers_fetch.add_parser('tests')
-    parser_fetch_tests.set_defaults(func=lambda args: get_tests(get_round()))
-
-    parser_fetch_problems = subparsers_fetch.add_parser('problems')
-    parser_fetch_problems.set_defaults(func=lambda args: get_problems(get_round()))
+    parser_fetch.add_argument('WHAT')
 
     args = parser.parse_args()
-    if not hasattr(args, 'func'):
+    if not hasattr(args, 'fetch'):
         print()
         sys.exit(1)
-    args.func(args)
+    elif args.fetch == 'tests':
+        get_tests(get_round())
+    elif args.fetch == 'problems':
+        get_problems(get_round())
