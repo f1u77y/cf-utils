@@ -1,67 +1,13 @@
 #! /usr/bin/env python3
 
 import sys
-import os
-import os.path
-import requests
-import lxml.html
-import argparse
 
-def get_round():
-    return os.path.basename(os.getcwd())
-
-def get_problems_count(rnum):
-    base_url = 'http://codeforces.com/contest/{rnum}/problems'
-    url = base_url.format(**locals())
-    r = requests.get(url).text
-    doc = lxml.html.document_fromstring(r)
-    return len(doc.xpath("//div[@class='problem-statement']"))
-
-
-def get_tests(rnum):
-    import os.path
-    if not os.path.exists('tests'):
-        os.mkdir('tests')
-    base_url = 'http://codeforces.com/contest/{rnum}/problem/{task}'
-    problems_count = get_problems_count(rnum)
-    for task in (chr(i + ord('A')) for i in range(problems_count)):
-        print('Task {task}'.format(**locals()))
-        url = base_url.format(**locals())
-        doc = lxml.html.document_fromstring(requests.get(url).text)
-        input_selector = 'div[class=sample-test] div[class=input] pre'
-        output_selector = 'div[class=sample-test] div[class=output] pre'
-
-        for i, elem in enumerate(doc.cssselect(input_selector)):
-            with open('tests/{task}.in.{i}'.format(**locals()), 'w') as input_file:
-                for line in elem.itertext():
-                    print(line, file=input_file)
-
-        for i, elem in enumerate(doc.cssselect(output_selector)):
-            with open('tests/{task}.out.{i}'.format(**locals()), 'w') as output_file:
-                for line in elem.itertext():
-                    print(line, file=output_file)
-
-def get_problems(rnum):
-    base_url = 'http://codeforces.com/contest/{rnum}/problems'
-    url = base_url.format(**locals())
-    r = requests.get(url).text
-    with open('problems.html', 'w') as problems_file:
-        print(r, file=problems_file)
+import cf_fetch as fetch
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(
-        prog='cf',
-        )
-    subparsers = parser.add_subparsers(help='sub-command help')
-
-    parser_fetch = subparsers.add_parser('fetch')
-    parser_fetch.add_argument('WHAT')
-
-    args = parser.parse_args()
-    if not hasattr(args, 'fetch'):
-        print()
-        sys.exit(1)
-    elif args.fetch == 'tests':
-        get_tests(get_round())
-    elif args.fetch == 'problems':
-        get_problems(get_round())
+    if len(sys.argv) == 1:
+        pass
+    elif sys.argv[1] == 'fetch':
+        fetch.parse_args(sys.argv[1:])
+    else:
+        pass
