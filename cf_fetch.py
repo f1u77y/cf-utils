@@ -17,12 +17,14 @@ def fetch_tests(rnum):
         output_selector = 'div[class=sample-test] div[class=output] pre'
 
         for i, elem in enumerate(doc.cssselect(input_selector)):
-            with open('tests/{task}.in.{i}'.format(**locals()), 'w') as input_file:
+            input_file_name = 'tests/{task}.in.{i}'.format(**locals())
+            with open(input_file_name, 'w') as input_file:
                 for line in elem.itertext():
                     print(line, file=input_file)
 
         for i, elem in enumerate(doc.cssselect(output_selector)):
-            with open('tests/{task}.out.{i}'.format(**locals()), 'w') as output_file:
+            output_file_name = 'tests/{task}.out.{i}'.format(**locals())
+            with open(output_file_name, 'w') as output_file:
                 for line in elem.itertext():
                     print(line, file=output_file)
 
@@ -42,3 +44,5 @@ def parse_args(argv):
         fetch_problems(util.get_round())
     else:
         pass
+
+__all__ = ['parse_args']
