@@ -2,13 +2,22 @@
 
 import sys
 
-import cf_fetch as fetch
+import cf.fetch
 
 modules = {
-    'fetch': fetch,
+    'fetch': cf.fetch,
 }
 
-if __name__ == "__main__":
+
+def usage():
+    pass
+
+
+def main():
     if len(sys.argv) < 2 or sys.argv[1] not in modules.keys():
-        pass
+        usage()
+        sys.exit(1)
     modules[sys.argv[1]].parse_args(sys.argv[1:])
+
+
+__all__ = ['main']

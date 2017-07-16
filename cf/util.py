@@ -2,8 +2,10 @@ import os
 import requests
 import lxml.html
 
+
 def get_round():
     return os.path.basename(os.getcwd())
+
 
 def get_problems_count(rnum):
     base_url = 'http://codeforces.com/contest/{rnum}/problems'
