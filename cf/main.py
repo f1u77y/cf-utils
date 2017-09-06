@@ -3,9 +3,11 @@
 import sys
 
 import cf.fetch
+import cf.init
 
 modules = {
     'fetch': cf.fetch,
+    'init': cf.init,
 }
 
 
