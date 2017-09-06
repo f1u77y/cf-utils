@@ -1,16 +1,12 @@
-import cf.util
-import cf.config
 import shutil
-import os.path
+from cf.config import global_conf, global_conf_dir
 
 
 def make_new_workdir(round_num):
-    round_skeleton_dir = f'~/.config/codeforces/round-skeleton/'
-    round_skeleton_dir = os.path.expanduser(round_skeleton_dir)
+    round_skeleton_dir = f'{global_conf_dir}/round-skeleton/'
     shutil.copytree(round_skeleton_dir, round_num)
-    ext = cf.config.global_conf['all.extension']
-    skeleton_filename = f'~/.config/codeforces/file-skeletons/skeleton.{ext}'
-    skeleton_filename = os.path.expanduser(skeleton_filename)
+    ext = global_conf['all.extension']
+    skeleton_filename = f'{global_conf_dir}/file-skeletons/skeleton.{ext}'
     for task in 'abcde':
         shutil.copy(skeleton_filename, f'{round_num}/{task}.{ext}')
 
