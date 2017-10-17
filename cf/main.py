@@ -4,10 +4,12 @@ import sys
 
 import cf.fetch
 import cf.init
+import cf.make
 
 modules = {
     'fetch': cf.fetch,
     'init': cf.init,
+    'make': cf.make,
 }
 
 
