@@ -1,6 +1,7 @@
 #! /usr/bin/env python3
 
 import sys
+import subprocess
 
 import cf.fetch
 import cf.init
@@ -19,11 +20,20 @@ def usage():
     pass
 
 
+def execute_external(subcmd, args):
+    command = f'cf-{subcmd}'
+    subprocess.call([command] + args)
+
+
 def main():
-    if len(sys.argv) < 2 or sys.argv[1] not in modules.keys():
+    if len(sys.argv) < 2:
         usage()
         sys.exit(1)
-    modules[sys.argv[1]].parse_args(sys.argv[1:])
+    subcommand = sys.argv[1]
+    if subcommand in modules:
+        modules[subcommand].parse_args(sys.argv[1:])
+    else:
+        execute_external(subcommand, sys.argv[2:])
 
 
 __all__ = ['main']
