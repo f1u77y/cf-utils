@@ -5,11 +5,13 @@ import sys
 import cf.fetch
 import cf.init
 import cf.make
+import cf.pp
 
 modules = {
     'fetch': cf.fetch,
     'init': cf.init,
     'make': cf.make,
+    'pp': cf.pp,
 }
 
 
