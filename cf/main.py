@@ -1,5 +1,6 @@
 #! /usr/bin/env python3
 
+import argparse
 import sys
 import subprocess
 
@@ -20,20 +21,16 @@ def usage():
     pass
 
 
-def execute_external(subcmd, args):
-    command = f'cf-{subcmd}'
-    subprocess.call([command] + args)
-
-
 def main():
-    if len(sys.argv) < 2:
-        usage()
-        sys.exit(1)
-    subcommand = sys.argv[1]
-    if subcommand in modules:
-        modules[subcommand].parse_args(sys.argv[1:])
-    else:
-        execute_external(subcommand, sys.argv[2:])
+    parser = argparse.ArgumentParser()
+    subparsers = parser.add_subparsers()
+
+    for name, module in modules.items():
+        subparser = subparsers.add_parser(name)
+        module.parse_args(subparser)
+
+    args = parser.parse_args()
+    args.run(args)
 
 
 __all__ = ['main']

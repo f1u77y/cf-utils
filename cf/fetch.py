@@ -38,15 +38,16 @@ def fetch_problems(rnum):
         print(r, file=problems_file)
 
 
-def parse_args(argv):
-    if len(argv) == 1:
-        pass
-    elif argv[1] == 'tests':
+def run(args):
+    if args.what == 'tests':
         fetch_tests(cf.util.get_round())
-    elif argv[1] == 'problems':
+    elif args.what == 'problems':
         fetch_problems(cf.util.get_round())
-    else:
-        pass
+
+
+def parse_args(parser):
+    parser.add_argument('what', choices=['tests', 'problems'], metavar='WHAT')
+    parser.set_defaults(run=run)
 
 
 __all__ = ['parse_args']

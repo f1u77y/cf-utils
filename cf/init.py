@@ -12,8 +12,14 @@ def make_new_workdir(round_num, tasks_num):
         shutil.copy(skeleton_filename, f'{round_num}/{task}.{ext}')
 
 
-def parse_args(argv):
-    make_new_workdir(argv[1], int(argv[2]))
+def run(args):
+    make_new_workdir(args.round_num, args.tasks_num)
+
+
+def parse_args(parser):
+    parser.add_argument('round_num', metavar='ROUND-NUMBER')
+    parser.add_argument('tasks_num', metavar='TASKS-NUMBER', type=int)
+    parser.set_defaults(run=run)
 
 
 __all__ = ['parse_args']
