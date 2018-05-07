@@ -1,25 +1,26 @@
 import os.path
 import os
+import subprocess
 
 
 def init_run(args):
     if not os.path.exists('build'):
         os.mkdir('build')
     os.chdir('build')
-    cmake_flags = ''
+    cmake_flags = []
     if args.debug:
-        cmake_flags += ' -DCMAKE_BUILD_TYPE=Debug'
+        cmake_flags.append('-DCMAKE_BUILD_TYPE=Debug')
     else:
-        cmake_flags += ' -DCMAKE_BUILD_TYPE=Release'
+        cmake_flags.append('-DCMAKE_BUILD_TYPE=Release')
     if args.asan:
-        cmake_flags += ' -DSANITIZE_ADDRESS=On'
+        cmake_flags.append('-DSANITIZE_ADDRESS=On')
     else:
-        cmake_flags += ' -DSANITIZE_ADDRESS=Off'
+        cmake_flags.append('-DSANITIZE_ADDRESS=Off')
     if args.ubsan:
-        cmake_flags += ' -DSANITIZE_UNDEFINED=On'
+        cmake_flags.append('-DSANITIZE_UNDEFINED=On')
     else:
-        cmake_flags += ' -DSANITIZE_UNDEFINED=Off'
-    os.system(f'cmake {cmake_flags} ..')
+        cmake_flags.append('-DSANITIZE_UNDEFINED=Off')
+    subprocess.run(['cmake'] + cmake_flags + ['..'])
 
 
 def make_run(args):
