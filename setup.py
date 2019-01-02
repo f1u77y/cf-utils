@@ -8,9 +8,9 @@ setup(name='cf-utils',
       packages=['cf'],
       scripts=['scripts/cf'],
       install_requires=[
-          'requests ==2.18.1',
-          'lxml ==3.8.0',
-          'cssselect ==1.0.1',
-          'PyYAML ==3.12',
+          'requests >=2.20.0',
+          'lxml',
+          'cssselect',
+          'PyYAML',
       ],
       )
