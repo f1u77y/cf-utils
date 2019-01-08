@@ -1,6 +1,7 @@
 import os
-import requests
+
 import lxml.html
+import requests
 
 
 def get_round():

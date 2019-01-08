@@ -1,6 +1,7 @@
 import os.path
 import re
 
+
 def run(args):
     include_dir = '~/.config/codeforces/file-skeletons'
     include_dir = os.path.expanduser(include_dir)
@@ -18,5 +19,6 @@ def run(args):
 def parse_args(parser):
     parser.add_argument('input_file', metavar='INPUT-FILE')
     parser.set_defaults(run=run)
+
 
 __all__ = ['parse_args']

@@ -6,7 +6,7 @@ import subprocess
 import sys
 
 
-modules = { module: importlib.import_module(f'cf.{module}') for module in [
+modules = {module: importlib.import_module(f'cf.{module}') for module in [
     'fetch',
     'init',
     'make',

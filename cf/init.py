@@ -1,4 +1,5 @@
 import shutil
+
 from cf.config import global_conf, global_conf_dir
 
 

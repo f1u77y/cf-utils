@@ -1,6 +1,7 @@
 import os.path
-import requests
+
 import lxml.html
+import requests
 
 import cf.util
 

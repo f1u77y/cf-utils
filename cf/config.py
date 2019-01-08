@@ -1,5 +1,6 @@
-import yaml
 import os.path
+
+import yaml
 
 
 global_conf_dir = '~/.config/codeforces/'
