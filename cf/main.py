@@ -3,18 +3,15 @@
 import argparse
 import sys
 import subprocess
+import importlib
 
-import cf.fetch
-import cf.init
-import cf.make
-import cf.pp
 
-modules = {
-    'fetch': cf.fetch,
-    'init': cf.init,
-    'make': cf.make,
-    'pp': cf.pp,
-}
+modules = { module: importlib.import_module(f'cf.{module}') for module in [
+    'fetch',
+    'init',
+    'make',
+    'pp',
+]}
 
 
 def usage():
