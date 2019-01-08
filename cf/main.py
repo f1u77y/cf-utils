@@ -14,10 +14,6 @@ modules = { module: importlib.import_module(f'cf.{module}') for module in [
 ]}
 
 
-def usage():
-    pass
-
-
 def main():
     parser = argparse.ArgumentParser()
     subparsers = parser.add_subparsers()
