@@ -1,9 +1,9 @@
 #! /usr/bin/env python3
 
 import argparse
-import sys
-import subprocess
 import importlib
+import subprocess
+import sys
 
 
 modules = { module: importlib.import_module(f'cf.{module}') for module in [
