@@ -12,8 +12,15 @@ modules = {module: importlib.import_module(f'cf.{module}') for module in [
 ]}
 
 
+def print_help_and_exit(args):
+    args.parser.print_help()
+    sys.exit(0)
+
+
 def main():
     parser = argparse.ArgumentParser()
+    parser.set_defaults(parser=parser)
+    parser.set_defaults(run=print_help_and_exit)
     subparsers = parser.add_subparsers()
 
     for name, module in modules.items():
