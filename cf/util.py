@@ -9,8 +9,6 @@ def get_round():
 
 
 def get_problems_count(rnum):
-    base_url = 'http://codeforces.com/contest/{rnum}/problems'
-    url = base_url.format(**locals())
-    r = requests.get(url).text
-    doc = lxml.html.document_fromstring(r)
+    url = f'https://codeforces.com/contest/{rnum}/problems'
+    doc = lxml.html.document_fromstring(requests.get(url).text)
     return len(doc.xpath("//div[@class='problem-statement']"))
