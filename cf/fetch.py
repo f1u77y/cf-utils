@@ -42,6 +42,8 @@ def run(args):
         fetch_tests(cf.util.get_round())
     elif args.what == 'problems':
         fetch_problems(cf.util.get_round())
+    else:
+        args.parser.print_help_and_exit()
 
 
 def parse_args(parser):
